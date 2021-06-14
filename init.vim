@@ -17,6 +17,7 @@ set incsearch
 set encoding=UTF-8
 set foldmethod=syntax
 set foldlevel=20
+set scrolloff=8 " maintain the cursor 8 line on top
 
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1 
 
