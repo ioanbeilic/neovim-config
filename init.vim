@@ -11,26 +11,30 @@ set nowrap
 set smartcase
 set noswapfile
 set nobackup
-set undodir=~/.config/nvim/undodir
+set undodir=./undodir
 set undofile
 set incsearch
 set encoding=UTF-8
 set foldmethod=syntax
 set foldlevel=20
 set scrolloff=8 " maintain the cursor 8 line on top
+set signcolumn=yes
+set colorcolumn=80 " indention cod to far
 
-let $NVIM_TUI_ENABLE_TRUE_COLOR=1 
+"  let $NVIM_TUI_ENABLE_TRUE_COLOR=1 
 
 call plug#begin("~/.config/nvim/plugged")
 " Plugin Section
+" search
+Plug 'nvim-lua/popup.nvim'
+Plug 'nvim-lua/plenary.nvim'
+Plug 'nvim-telescope/telescope.nvim'
+
 Plug 'morhetz/gruvbox'
 Plug 'chriskempson/base16-vim'
 " icon
 Plug 'ryanoasis/vim-devicons'
 
-" search
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim' 
 
 " sintax highlighting
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -55,6 +59,24 @@ Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
 
 call plug#end()
+
+
+let mapleader = " "
+
+" telescope key init
+" Find files using Telescope command-line sugar.
+nnoremap <leader>ff <cmd>Telescope find_files<cr>
+nnoremap <leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <leader>fb <cmd>Telescope buffers<cr>
+nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+
+" Using lua functions
+nnoremap <leader>ff <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>fg <cmd>lua require('telescope.builtin').live_grep()<cr>
+nnoremap <leader>fb <cmd>lua require('telescope.builtin').buffers()<cr>
+nnoremap <leader>fh <cmd>lua require('telescope.builtin').help_tags()<cr>
+" telecope key end
+
 "" coc explorer config
 "
 let g:jedi#environment_path = "venv"
@@ -102,8 +124,8 @@ let &t_ZR="\e[23m"
 highlight Comment gui=italic cterm=italic
 highlight htmlArg gui=italic cterm=italic
 
-nmap <space>e :CocCommand explorer<CR>
-nmap <space>t :FloatermToggle<CR>
+nmap <leader>e :CocCommand explorer<CR>
+nmap <leader>t :FloatermToggle<CR>
 " Use preset argument to open it
 " nmap <space>ed :CocCommand explorer --preset .vim<CR>
 " nmap <space>ef :CocCommand explorer --preset floating<CR>
@@ -134,8 +156,8 @@ autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
 autocmd BufLeave *.{js,jsx,ts,tsx} :syntax sync clear
 
 syntax on
-" colorscheme gruvbox
-" let g:airline_theme='gruvbox'
+colorscheme gruvbox
+let g:airline_theme='gruvbox'
 colorscheme base16-default-dark
 
 let g:airline#extensions#tabline#buffer_nr_show = 1
@@ -145,12 +167,17 @@ let g:airline_powerline_fonts = 1
 " let g:airline_theme='base16-spacemacs'
 let base16colorspace=256  " Access colors present in 256 colorspace
 set termguicolors
+"
+"
 
+highlight Normal guibg=none
+highlight NonText guibg=none
+
+"
 " bracket par colorizer
 let g:rainbow_active = 1 "set to 0 if you want to enable it later via :RainbowToggle
 let loaded_matchparen = 1
 " ?? analizar
-let mapleader = ","
 
 " remap jj to escape 
 imap jj <Esc>
@@ -176,20 +203,10 @@ nnoremap <C-k> <C-S-w>k
 nnoremap <C-l> <C-S-w>l
 nnoremap <C-h> <C-S-w>h
 
-" remap select from autocomplet
-" inoremap <expr> <C-j> pumvisible() ? "\<C-n>" : "\<Down>"
-" inoremap <expr> <C-k> pumvisible() ? "\<C-p>" : "\<Up>"
-
-" search modal 
-nnoremap <C-p> :FZF<CR>
-let g:fzf_action = {
-  \ 'ctrl-t': 'tab split',
-  \ 'ctrl-s': 'split',
-  \ 'ctrl-v': 'vsplit'
-  \}
-
-" ignore node_modules on search
-let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+" coc init
+" Set internal encoding of vim, not needed on neovim, since coc.nvim using some
+" unicode characters in the file autoload/float.vim
+set encoding=utf-8
 
 " TextEdit might fail if hidden is not set.
 set hidden
@@ -210,7 +227,7 @@ set shortmess+=c
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-if has("patch-8.1.1564")
+if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
   set signcolumn=number
 else
@@ -218,7 +235,7 @@ else
 endif
 
 " Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap<tab>' to make sure tab is not mapped by
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
 " other plugin before putting this into your config.
 inoremap <silent><expr> <TAB>
       \ pumvisible() ? "\<C-n>" :
@@ -230,7 +247,6 @@ function! s:check_back_space() abort
   let col = col('.') - 1
   return !col || getline('.')[col - 1]  =~# '\s'
 endfunction
-
 
 " Use <c-space> to trigger completion.
 if has('nvim')
@@ -254,7 +270,6 @@ nmap <silent> gd <Plug>(coc-definition)
 nmap <silent> gy <Plug>(coc-type-definition)
 nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
-
 
 " Use K to show documentation in preview window.
 nnoremap <silent> K :call <SID>show_documentation()<CR>
@@ -309,11 +324,14 @@ xmap ac <Plug>(coc-classobj-a)
 omap ac <Plug>(coc-classobj-a)
 
 " Remap <C-f> and <C-b> for scroll float windows/popups.
-" Note coc#float#scroll works on neovim >= 0.4.3 or vim >= 8.2.0750
-nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+ nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
 
 " Use CTRL-S for selections ranges.
 " Requires 'textDocument/selectionRange' support of language server.
@@ -336,22 +354,23 @@ set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
 
 " Mappings for CoCList
 " Show all diagnostics.
-nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <space>ca  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
-nnoremap <silent><nowait> <space>ex  :<C-u>CocList extensions<cr>
+nnoremap <silent><nowait> <space>ce  :<C-u>CocList extensions<cr>
 " Show commands.
-nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+nnoremap <silent><nowait> <space>cc  :<C-u>CocList commands<cr>
 " Find symbol of current document.
-nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <space>co  :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+nnoremap <silent><nowait> <space>cs  :<C-u>CocList -I symbols<cr>
 " Do default action for next item.
-nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+nnoremap <silent><nowait> <space>cj  :<C-u>CocNext<CR>
 " Do default action for previous item.
-nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+nnoremap <silent><nowait> <space>ck  :<C-u>CocPrev<CR>
 " Resume latest coc list.
-nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR> 
+nnoremap <silent><nowait> <space>cp  :<C-u>CocListResume<CR> 
 
+"coc end
 
 if exists("g:loaded_webdevicons")
   call webdevicons#refresh()
