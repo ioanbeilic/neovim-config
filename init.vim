@@ -11,14 +11,13 @@ set nowrap
 set smartcase
 set noswapfile
 set nobackup
-set undodir=./undodir
+set undodir=/home/ioan/.config/nvim/undodir
 set undofile
 set incsearch
 set encoding=UTF-8
 set foldmethod=syntax
 set foldlevel=20
 set scrolloff=8 " maintain the cursor 8 line on top
-set signcolumn=yes
 set colorcolumn=80 " indention cod to far
 
 "  let $NVIM_TUI_ENABLE_TRUE_COLOR=1 
@@ -229,9 +228,9 @@ set shortmess+=c
 " diagnostics appear/become resolved.
 if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
+    set signcolumn=number
 else
-  set signcolumn=yes
+    set signcolumn=yes
 endif
 
 " Use tab for trigger completion with characters ahead and navigate.
