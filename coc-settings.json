@@ -31,5 +31,8 @@
   "explorer.keyMappings": {
     "<cr>": ["expandable?", "expand", "open"],
     "v": "open:vsplit"
-  }
+  },
+  "cSpell.userWords": [
+    "Firestore"
+  ]
 }

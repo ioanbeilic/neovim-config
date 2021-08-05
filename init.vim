@@ -17,10 +17,9 @@ set incsearch
 set encoding=UTF-8
 set foldmethod=syntax
 set foldlevel=20
-set scrolloff=8 " maintain the cursor 8 line on top
+set scrolloff=10 " maintain the cursor 8 line on top
 set colorcolumn=80 " indention cod to far
-
-"  let $NVIM_TUI_ENABLE_TRUE_COLOR=1 
+"  let $NVIM_TUI_ENABE_TRUE_COLOR=1 
 
 call plug#begin("~/.config/nvim/plugged")
 " Plugin Section
@@ -46,18 +45,29 @@ Plug 'voldikss/vim-floaterm'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
-Plug 'tpope/vim-fugitive'
 Plug 'Yggdroot/indentLine'
+
+Plug 'mhinz/vim-signify'
+Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
+Plug 'junegunn/gv.vim'
 
 " react
 
 Plug 'pangloss/vim-javascript'
 Plug 'leafgarland/typescript-vim'
+Plug 'ycm-core/YouCompleteMe', { 'do': './install.py --tern-completer' }
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 Plug 'jparise/vim-graphql'
 
+" debug 
+Plug 'puremourning/vimspector' 
+Plug 'szw/vim-maximizer'
+
+ 
 call plug#end()
+
 
 
 let mapleader = " "
@@ -131,6 +141,31 @@ nmap <leader>t :FloatermToggle<CR>
 
 " List all presets
 " nmap <space>el :CocList explPresets
+"
+
+" airline
+"" enable tabline
+let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#left_sep = ' '
+let g:airline#extensions#tabline#left_alt_sep = '|'
+let g:airline#extensions#tabline#right_sep = ''
+let g:airline#extensions#tabline#right_alt_sep = ''
+let g:airline#extensions#tabline#formatter = 'default'
+
+
+" enable powerline fonts
+let g:airline_powerline_fonts = 1
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+
+" Switch to your current theme
+" let g:airline_theme = 'onedark'
+
+" Always show tabs
+set showtabline=4
+
+" We don't need to see things like -- INSERT -- anymore
+set noshowmode
 
 
 let g:coc_global_extensions = [
@@ -149,6 +184,7 @@ let g:coc_global_extensions = [
             \'coc-angular',
             \'coc-git',
             \]
+
 
 "react 
 autocmd BufEnter *.{js,jsx,ts,tsx} :syntax sync fromstart
@@ -228,7 +264,7 @@ set shortmess+=c
 " diagnostics appear/become resolved.
 if has("nvim-0.5.0") || has("patch-8.1.1564")
   " Recently vim can merge signcolumn and number column into one
-    set signcolumn=number
+    set signcolumn=yes
 else
     set signcolumn=yes
 endif
@@ -377,4 +413,11 @@ endif
 
 " identecion vertical line
  let g:indentLine_char = '⎸'
+
+
+ " debug remapped
+ "
+ let g:vimspector_enable_mappings = 'HUMAN'
+
+
 
