@@ -1,4 +1,5 @@
 
-node_modules
-plugged
-undodir
+node_modules/
+plugged/
+undodir/
+.config/

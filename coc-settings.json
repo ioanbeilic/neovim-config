@@ -1,17 +1,4 @@
 {
-  "coc.preferences.formatOnSaveFiletypes": [
-    "css",
-    "markdown",
-    "javascript",
-    "graphql",
-    "typescript",
-    "html",
-    "yaml",
-    "json",
-    "python",
-    "typescriptreact",
-    "javascriptreact"
-  ],
   "eslint.filetypes": [
     "javascript",
     "typescript",
@@ -21,6 +8,7 @@
   ],
   "tsserver.formatOnType": true,
   "coc.preferences.formatOnType": true,
+  "coc.preferences.formatOnSaveFiletypes": ["*"],
   "python.linting.enabled": true,
   "python.linting.pylintEnabled": true,
 
@@ -32,7 +20,5 @@
     "<cr>": ["expandable?", "expand", "open"],
     "v": "open:vsplit"
   },
-  "cSpell.userWords": [
-    "Firestore"
-  ]
+  "cSpell.userWords": ["Firestore"]
 }

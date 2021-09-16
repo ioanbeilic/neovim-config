@@ -34,7 +34,7 @@ Plug 'chriskempson/base16-vim'
 Plug 'ryanoasis/vim-devicons'
 
 
-" sintax highlighting
+" sintax highlightiapp-text-editorng
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 
 " braker par colorizer
@@ -54,12 +54,12 @@ Plug 'junegunn/gv.vim'
 
 " react
 
-Plug 'pangloss/vim-javascript'
-Plug 'leafgarland/typescript-vim'
-Plug 'ycm-core/YouCompleteMe', { 'do': './install.py --tern-completer' }
-Plug 'peitalin/vim-jsx-typescript'
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-Plug 'jparise/vim-graphql'
+" Plug 'pangloss/vim-javascript'
+" Plug 'leafgarland/typescript-vim'
+" Plug 'ycm-core/YouCompleteMe', { 'do': './install.py --tern-completer' }
+" Plug 'peitalin/vim-jsx-typescript'
+" Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
+" Plug 'jparise/vim-graphql'
 
 " debug 
 Plug 'puremourning/vimspector' 
